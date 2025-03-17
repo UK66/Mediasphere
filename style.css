@@ -1,0 +1,82 @@
+<style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #dfe9f3, #ffffff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
+            gap: 20px;
+        }
+        .container, .video-container {
+            background: rgba(179, 194, 255, 0.8);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+            transition: transform 0.3s ease-in-out;
+            color: #333;
+            backdrop-filter: blur(10px);
+        }
+        .container:hover, .video-container:hover {
+            transform: scale(1.02);
+        }
+        h2, h3 {
+            color: #2c3e50;
+            font-size: 22px;
+        }
+        label {
+            display: block;
+            margin: 12px 0 5px;
+            font-weight: 500;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: border 0.3s;
+            background: #f9f9f9;
+            color: #333;
+        }
+        input:focus {
+            border-color: #87CEEB;
+        }
+        button {
+            background: #4facfe;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: linear-gradient(to right, #00f2fe, #4facfe);
+        }
+        #statusMessage {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+        video {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>

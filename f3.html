@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendee Registration</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+
+<body style="background-color: rgba(106, 133, 240, 0.8);">
+    <div class="wrapper">
+        <div class="container">
+            <h2>Register</h2>
+            <form id="attendeeForm">
+                <label for="id">ID:</label>
+                <input type="text" id="id" name="id" readonly>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <button type="submit">Register</button>
+            </form>
+            <p id="statusMessage"></p>
+        </div>
+        <div class="video-container">
+            <h3>Event Preview</h3>
+            <video controls>
+                <source src="wurivideo_dnbURD4P_1742095413396.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        // ✅ Ensure Supabase is initialized before any function uses it
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log("✅ DOM Loaded. Initializing Supabase...");
+
+            // ✅ Supabase Initialization (must be inside the event listener)
+            const SUPABASE_URL = "https://niebeazninzpysscqekm.supabase.co"; // Replace with actual URL
+            const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pZWJlYXpuaW56cHlzc2NxZWttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIyMjA1OTgsImV4cCI6MjA1Nzc5NjU5OH0.GPrN-2X3Sa-DYG6klBoHVdSnifk1tAY9PT-fOYBdhxs"; // Replace with actual key
+            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+            if (!supabase) {
+                console.error("❌ Supabase failed to initialize!");
+                return;
+            }
+
+            console.log("✅ Supabase Initialized Successfully!");
+
+            // ✅ Generate a unique ID (UUID) when the page loads
+            document.getElementById("id").value = crypto.randomUUID();
+
+            // ✅ Handle form submission
+            document.getElementById("attendeeForm").addEventListener("submit", async function (event) {
+                event.preventDefault(); // Prevent page reload
+
+                const id = document.getElementById("id").value;
+                const name = document.getElementById("name").value;
+                const email = document.getElementById("email").value;
+
+                try {
+                    console.log("🚀 Sending data to Supabase...");
+
+                    const { data, error } = await supabase
+                        .from("Attendees") // Ensure this table exists in Supabase
+                        .insert([{ id, name, email }]); // Insert with id
+
+                    if (error) {
+                        throw error;
+                    }
+
+                    document.getElementById("statusMessage").textContent = "✅ Successfully registered!";
+                    document.getElementById("statusMessage").style.color = "green";
+
+                    // ✅ Generate a new UUID for the next entry
+                    document.getElementById("id").value = crypto.randomUUID();
+                    document.getElementById("attendeeForm").reset();
+                } catch (error) {
+                    console.error("❌ Error inserting data:", error);
+                    document.getElementById("statusMessage").textContent = "Error: " + error.message;
+                    document.getElementById("statusMessage").style.color = "red";
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
